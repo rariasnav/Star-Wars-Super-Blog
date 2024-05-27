@@ -15,7 +15,6 @@ api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api)
 
-
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
 
@@ -45,7 +44,7 @@ def create_user():
         db.session.add(new_user)
         db.session.commit()
 
-        return jsonify({"msg": "User created"}), 200
+        return jsonify({"msg": "User created"}), 201
     
 @api.route('/login', methods=['POST'])
 def login():
@@ -93,8 +92,18 @@ def create_person():
 
     if user.role == Roles.admin:
         new_person = People()
-        for key, value in body.items():                
+        for key, value in body.items():
+            if value is None:
+                value = 'n/a'                
             setattr(new_person, key, value)
+
+        non_nullable_fields = [
+            'height', 'mass', 'hair_color', 'skin_color', 'eye_color', 'birth_year', 'gender'
+        ]
+        for field in non_nullable_fields:
+            if getattr(new_person, field) is None:
+                setattr(new_person, field, 'n/a')
+
 
         db.session.add(new_person)
         db.session.commit()                    
@@ -121,7 +130,17 @@ def create_planet():
     if user.role == Roles.admin:
         new_planet = Planets()
         for key, value in body.items():
+            if value is None:
+                value = 'n/a'
             setattr(new_planet, key, value)
+
+        non_nullable_fields = [
+            'name', 'rotation_period', 'orbital_period', 'diameter', 'climate', 'gravity', 'terrain', 'population'
+        ]
+
+        for field in non_nullable_fields:
+            if getattr(new_planet, field) is None:
+                setattr(new_planet, field, 'n/a')
 
         db.session.add(new_planet)
         db.session.commit()
@@ -147,7 +166,18 @@ def create_starship():
     if user.role == Roles.admin:
         new_starship = Starships()
         for key, value in body.items():
+            if value is None:
+                value = 'n/a'
             setattr(new_starship, key, value)
+
+        non_nullable_fields = [
+            'name', 'model', 'manufacturer', 'cost_in_credits', 'length', 'max_atmosphering_speed', 'crew', 
+            'passengers', 'cargo_capacity', 'consumables', 'hyperdrive_rating', 'MGLT', 'starship_class'
+        ]
+
+        for field in non_nullable_fields:
+            if getattr(new_starship, field) is None:
+                setattr(new_starship, field, 'n/a')
 
         db.session.add(new_starship)
         db.session.commit()

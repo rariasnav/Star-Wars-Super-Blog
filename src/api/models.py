@@ -30,8 +30,8 @@ class People(db.Model):
     __tablename__ = 'people'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
-    heigth	= db.Column(db.Integer, unique=False, nullable=False)
-    mass = db.Column(db.Integer, unique=False, nullable=False)
+    height	= db.Column(db.String(80), unique=False, nullable=False)
+    mass = db.Column(db.String(80), unique=False, nullable=False)
     hair_color = db.Column(db.String(40), unique=False, nullable=False)
     skin_color = db.Column(db.String(40), unique=False, nullable=False)
     eye_color = db.Column(db.String(40), unique=False, nullable=False)
@@ -46,7 +46,7 @@ class People(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "heigth": self.heigth,
+            "height": self.height,
             "mass": self.mass,
             "hair_color": self.hair_color,
             "skin_color": self.skin_color,
@@ -59,13 +59,13 @@ class Planets(db.Model):
     __tablename__ = 'planets'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
-    rotation_period	= db.Column(db.Integer, unique=False, nullable=False)
-    orbital_period = db.Column(db.Integer, unique=False, nullable=False)
-    diameter = db.Column(db.Integer, unique=False, nullable=False)
+    rotation_period	= db.Column(db.String(10), unique=False, nullable=False)
+    orbital_period = db.Column(db.String(10), unique=False, nullable=False)
+    diameter = db.Column(db.String(10), unique=False, nullable=False)
     climate	= db.Column(db.String(40), unique=False, nullable=False)
-    gravity	= db.Column(db.String(20), unique=False, nullable=False)
+    gravity	= db.Column(db.String(80), unique=False, nullable=False)
     terrain	= db.Column(db.String(40), unique=False, nullable=False)
-    population = db.Column(db.Integer, unique=False, nullable=False)
+    population = db.Column(db.String(80), unique=False, nullable=False)
     likes = db.relationship('Likes', backref='planets', lazy=True)
 
     def __repr__(self):
@@ -89,16 +89,16 @@ class Starships(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
     model = db.Column(db.String(80), unique=False, nullable=False)
-    manufacturer = db.Column(db.String(40), unique=False, nullable=False)
-    cost_in_credits = db.Column(db.Integer, unique=False, nullable=False)
-    length = db.Column(db.Integer, unique=False, nullable=False)
-    max_atmosphering_speed = db.Column(db.Integer, unique=False, nullable=False)
-    crew = db.Column(db.Integer, unique=False, nullable=False)
-    passengers = db.Column(db.Integer, unique=False, nullable=False)
-    cargo_capacity = db.Column(db.Integer, unique=False, nullable=False)
+    manufacturer = db.Column(db.String(80), unique=False, nullable=False)
+    cost_in_credits = db.Column(db.String(40), unique=False, nullable=False)
+    length = db.Column(db.String(20), unique=False, nullable=False)
+    max_atmosphering_speed = db.Column(db.String(20), unique=False, nullable=False)
+    crew = db.Column(db.String(20), unique=False, nullable=False)
+    passengers = db.Column(db.String(20), unique=False, nullable=False)
+    cargo_capacity = db.Column(db.String(20), unique=False, nullable=False)
     consumables = db.Column(db.String(30), unique=False, nullable=False)
-    hyperdrive_rating = db.Column(db.Integer, unique=False, nullable=False)
-    MGLT =  db.Column(db.Integer, unique=False, nullable=False)
+    hyperdrive_rating = db.Column(db.String(10), unique=False, nullable=False)
+    MGLT =  db.Column(db.String(10), unique=False, nullable=False)
     starship_class = db.Column(db.String(60), unique=False, nullable=False)
     likes = db.relationship('Likes', backref='starships', lazy=True)
 
@@ -144,7 +144,7 @@ class Likes(db.Model):
         if person is not None:
             person = person.serialize()
 
-        planet = PLanets.query.get(self.planet_id)
+        planet = Planets.query.get(self.planet_id)
         if planet is not None:
             planet = planet.serialize()
 
