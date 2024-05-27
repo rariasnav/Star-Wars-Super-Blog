@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 4cc9c03a5ec6
+Revision ID: 3e6357fabf56
 Revises: 
-Create Date: 2024-05-26 14:43:15.246559
+Create Date: 2024-05-27 20:04:37.785375
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '4cc9c03a5ec6'
+revision = '3e6357fabf56'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,8 +21,8 @@ def upgrade():
     op.create_table('people',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=80), nullable=False),
-    sa.Column('heigth', sa.Integer(), nullable=False),
-    sa.Column('mass', sa.Integer(), nullable=False),
+    sa.Column('height', sa.String(length=80), nullable=False),
+    sa.Column('mass', sa.String(length=80), nullable=False),
     sa.Column('hair_color', sa.String(length=40), nullable=False),
     sa.Column('skin_color', sa.String(length=40), nullable=False),
     sa.Column('eye_color', sa.String(length=40), nullable=False),
@@ -34,13 +34,13 @@ def upgrade():
     op.create_table('planets',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=80), nullable=False),
-    sa.Column('rotation_period', sa.Integer(), nullable=False),
-    sa.Column('orbital_period', sa.Integer(), nullable=False),
-    sa.Column('diameter', sa.Integer(), nullable=False),
+    sa.Column('rotation_period', sa.String(length=10), nullable=False),
+    sa.Column('orbital_period', sa.String(length=10), nullable=False),
+    sa.Column('diameter', sa.String(length=10), nullable=False),
     sa.Column('climate', sa.String(length=40), nullable=False),
-    sa.Column('gravity', sa.String(length=20), nullable=False),
+    sa.Column('gravity', sa.String(length=80), nullable=False),
     sa.Column('terrain', sa.String(length=40), nullable=False),
-    sa.Column('population', sa.Integer(), nullable=False),
+    sa.Column('population', sa.String(length=80), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('name')
     )
@@ -48,16 +48,16 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=80), nullable=False),
     sa.Column('model', sa.String(length=80), nullable=False),
-    sa.Column('manufacturer', sa.String(length=40), nullable=False),
-    sa.Column('cost_in_credits', sa.Integer(), nullable=False),
-    sa.Column('length', sa.Integer(), nullable=False),
-    sa.Column('max_atmosphering_speed', sa.Integer(), nullable=False),
-    sa.Column('crew', sa.Integer(), nullable=False),
-    sa.Column('passengers', sa.Integer(), nullable=False),
-    sa.Column('cargo_capacity', sa.Integer(), nullable=False),
+    sa.Column('manufacturer', sa.String(length=80), nullable=False),
+    sa.Column('cost_in_credits', sa.String(length=40), nullable=False),
+    sa.Column('length', sa.String(length=20), nullable=False),
+    sa.Column('max_atmosphering_speed', sa.String(length=20), nullable=False),
+    sa.Column('crew', sa.String(length=20), nullable=False),
+    sa.Column('passengers', sa.String(length=20), nullable=False),
+    sa.Column('cargo_capacity', sa.String(length=20), nullable=False),
     sa.Column('consumables', sa.String(length=30), nullable=False),
-    sa.Column('hyperdrive_rating', sa.Integer(), nullable=False),
-    sa.Column('MGLT', sa.Integer(), nullable=False),
+    sa.Column('hyperdrive_rating', sa.String(length=10), nullable=False),
+    sa.Column('MGLT', sa.String(length=10), nullable=False),
     sa.Column('starship_class', sa.String(length=60), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('name')

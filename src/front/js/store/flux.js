@@ -207,6 +207,51 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				}
 				return true
+			},
+			getMyPeopleData: async () =>{
+				const store = getStore()
+				try {
+					const response = await fetch(`${store.baseURL}/people`)
+					const data = await response.json()
+					
+					if(response){
+						return data
+					}
+					return false
+				} catch (error) {
+					console.log("Error fetching database", error)
+					return false
+				}
+			},
+			getMyPlanetsData: async () =>{
+				const store = getStore()
+				try {
+					const response = await fetch(`${store.baseURL}/planets`)
+					const data = await response.json()
+
+					if(response){
+						return data
+					}
+					return false
+				} catch (error) {
+					console.log("Error fetching database", error)
+					return false
+				}
+			},
+			getMyStarshipsData: async () =>{
+				const store = getStore()
+				try {
+					const response = await fetch(`${store.baseURL}/starships`)
+					const data = await response.json()
+
+					if(response){
+						return data
+					}
+					return false
+				} catch (error) {
+					console.log("Error fetching database", error)
+					return false
+				}
 			}
 		}
 	};

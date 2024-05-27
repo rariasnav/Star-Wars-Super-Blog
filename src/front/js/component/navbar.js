@@ -12,10 +12,10 @@ export const Navbar = () => {
 	}
 
 	return (
-		<nav className="navbar navbar-light bg-light">
+		<nav className="navbar navbar-dark bg-dark">
 			<div className="container">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
+				<Link to="/" className="custom-link">
+					<span className="navbar-brand mb-0 h1">Star Wars Super Blog</span>
 				</Link>
 				<div className="ml-auto">
 					{store.loggedUser == null && <span>Loading...</span>}	

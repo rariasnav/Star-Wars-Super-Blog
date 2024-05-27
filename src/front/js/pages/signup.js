@@ -1,6 +1,7 @@
 import React, {useContext, useState} from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
+import "../../styles/home.css";
 
 export const Signup = () =>{
     const {actions, store} = useContext(Context)
