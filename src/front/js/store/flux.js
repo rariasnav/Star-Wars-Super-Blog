@@ -252,7 +252,44 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error fetching database", error)
 					return false
 				}
-			}
+			},
+			getUserLikes: async () =>{
+				const store = getStore()
+				try {
+					const response = await fetch(`${store.baseURL}/user/likes`, {
+						headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+					})
+					const data = await response.json()
+					if(response){
+						return data
+					}
+					return false
+				} catch (error) {
+					console.log("Error fetching likes", error)
+					return false
+				}
+			},
+			likeItem: async (data) =>{
+				const store = getStore()
+				const actions = getActions()
+				try {
+					const requestOptions = {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${localStorage.getItem('token')}`
+						},
+						body: JSON.stringify(data)
+					}
+					const response = await fetch(`${store.baseURL}/likes`, requestOptions)
+
+					if(response){
+						return true
+					}
+				} catch (error) {
+					console.error("Error handling like", error)
+				}
+			},
 		}
 	};
 };

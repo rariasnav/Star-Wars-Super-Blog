@@ -10,6 +10,24 @@ export const Home = () => {
 	const [people, setPeople] = useState([])
 	const [planets, setPlanets] = useState([])
 	const [starships, setStarships] = useState([])
+	const [likes, setLikes] = useState([])
+
+	const isLiked = (type, id) =>{
+		if(!Array.isArray(likes)){
+			console.error("Likes is not an array");
+        	return false;
+		}
+		return likes.some( (like)=> like[type] && like[type].id === id )
+	}
+
+	const handleLike = async (type, id) =>{
+		const data = {type, id}
+		const response = await actions.likeItem(data)
+		if(response){
+			const updatedLikes = await actions.getUserLikes()
+			setLikes(updatedLikes)
+		}
+	}
 
 	useEffect( ()=>{
 		const getPeople = async () =>{
@@ -40,6 +58,18 @@ export const Home = () => {
 		}
 		getStarships()
 	},[])
+
+	useEffect( ()=>{
+		if(store.loggedUser){
+			const getLikes = async () =>{
+				const response = await actions.getUserLikes()
+				if(response){
+					setLikes(response)
+				}
+			}
+			getLikes()
+		}		
+	},[store.loggedUser])
 	
 	return (
 		<div className="container my-5">
@@ -47,8 +77,10 @@ export const Home = () => {
 			<div className="container-body my-5">
 				<div className="album py-5 bg-background-light-color">
 					<div className="container">
+						<h1 className="text-light">Some Characters</h1>
 						<div className="horizontal-scroll-container d-flex">
 							{people ? people.map( (person, index)=> {
+								const liked = isLiked('person', person.id)
 								return(
 									<div className="card shadow-sm" key={index}>
 										<img
@@ -68,8 +100,19 @@ export const Home = () => {
 													</button>
 													<button 
 														type="button" 
-														className="btn btn-sm btn-outline-secondary"
-														><i className="fa-regular fa-heart"></i>
+														className={
+															`btn btn-sm 
+															${isLiked('person', person.id) ? 
+															'btn-danger' 
+															: 
+															'btn-outline-secondary'}`}
+														onClick={ ()=>handleLike('person', person.id) }
+														><i className={
+															`${isLiked('person', person.id) ? 
+															'fa-solid' 
+															: 
+															'fa-regular'} fa-heart`}>
+														</i>
 													</button>												
 												</div>								
 											</div>
@@ -85,7 +128,8 @@ export const Home = () => {
 						</div>
 					</div>
 
-					<div className="container">
+					<div className="container mt-3">
+					<h1 className="text-light">Some Planets</h1>
 						<div className="horizontal-scroll-container d-flex my-2">
 							{planets ? planets.map( (planet, index)=> {
 								return(
@@ -107,8 +151,20 @@ export const Home = () => {
 													</button>
 													<button 
 														type="button" 
-														className="btn btn-sm btn-outline-secondary"
-														><i className="fa-regular fa-heart"></i>
+														className={
+															`btn btn-sm 
+															${isLiked('planet', planet.id) ? 
+															'btn-danger' 
+															: 
+															'btn-outline-secondary'}`}
+														onClick={ ()=>handleLike('planet', planet.id) }
+													>
+														<i className={
+															`${isLiked('planet', planet.id) ? 
+															'fa-solid' 
+															: 
+															'fa-regular'} fa-heart`}>
+														</i>
 													</button>												
 												</div>								
 											</div>
@@ -124,7 +180,8 @@ export const Home = () => {
 						</div>
 					</div>
 
-					<div className="container">
+					<div className="container mt-3">
+						<h1 className="text-light">Some Starships</h1>
 						<div className="horizontal-scroll-container d-flex my-2">
 							{starships ? starships.map( (starship, index)=> {
 								return(
@@ -146,8 +203,20 @@ export const Home = () => {
 													</button>
 													<button 
 														type="button" 
-														className="btn btn-sm btn-outline-secondary"
-														><i className="fa-regular fa-heart"></i>
+														className={
+															`btn btn-sm 
+															${isLiked('starship', starship.id) ? 
+															'btn-danger' 
+															: 
+															'btn-outline-secondary'}`}
+														onClick={ ()=>handleLike('starship', starship.id) }
+													>
+														<i className={
+															`${isLiked('starship', starship.id) ? 
+															'fa-solid' 
+															: 
+															'fa-regular'} fa-heart`}>																
+														</i>
 													</button>												
 												</div>								
 											</div>

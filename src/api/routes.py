@@ -225,3 +225,61 @@ def get_starship(starship_id):
     starship = Starships.query.filter_by(id=starship_id).first()
 
     return jsonify(starship.serialize()), 200
+
+@api.route('/likes', methods=['POST'])
+@jwt_required()
+def like_item():
+    user_name = get_jwt_identity()   
+
+    user = User.query.filter_by(user_name=user_name).first()
+    if user is None:
+        return jsonify({"msg": "User not found"}), 404
+
+    body = request.get_json()
+    if 'type' not in body or 'id' not in body:
+        return jsonify({"msg": "Missing type or id"}), 401
+    
+    like_type = body['type']
+    like_id = body['id']
+
+    valid_types = {'person', 'planet', 'starship'}
+    if like_type not in valid_types:
+        return jsonify({"msg": "Invalid type"}), 400
+    
+    if like_type == 'person':
+        like = Likes.query.filter_by(user_id=user.id, person_id=like_id).first()
+    elif like_type == 'planet':
+        like = Likes.query.filter_by(user_id=user.id, planet_id=like_id).first()
+    elif like_type == 'starship':
+        like = Likes.query.filter_by(user_id=user.id, starship_id=like_id).first()
+
+    if like:
+        db.session.delete(like)
+        db.session.commit()
+        return jsonify({"msg": "Like removed"}), 200
+    
+    else:
+        if like_type == 'person':
+            new_like = Likes(user_id=user.id, person_id=like_id)
+        elif like_type == 'planet':
+            new_like = Likes(user_id=user.id, planet_id=like_id)
+        elif like_type == 'starship':
+            new_like = Likes(user_id=user.id, starship_id=like_id)
+
+        db.session.add(new_like)
+        db.session.commit()
+        return jsonify({"msg": "Like added"}), 201
+    
+@api.route('/user/likes', methods=['GET'])
+@jwt_required()
+def get_likes():
+    user_name = get_jwt_identity()
+    user = User.query.filter_by(user_name=user_name).first()
+
+    if user is None:
+        return jsonify({"msg": "User not found"}), 404
+    
+    likes = Likes.query.filter_by(user_id=user.id).all()
+    result = list(map(lambda like: like.serialize(), likes))
+
+    return jsonify(result), 200

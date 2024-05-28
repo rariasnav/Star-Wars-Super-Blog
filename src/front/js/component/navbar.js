@@ -43,14 +43,14 @@ export const Navbar = () => {
 									className="btn btn-secondary dropdown-toggle" 
 									type="button" 
 									data-bs-toggle="dropdown" 
-									aria-expanded="false">
-									Name logged
+									aria-expanded="false"
+								>
+								{store.loggedUser.user_name}
 								</button>
 								<ul className="dropdown-menu">
 									{store.loggedUser && store.loggedUser.role === "admin" && (
 										<li><span className="dropdown-item" onClick={ ()=>navigate('/adminDataLoad') }>Admin data</span></li>
 									)}
-									<li><span className="dropdown-item">Favorites</span></li>
 									<li><span className="dropdown-item" onClick={ ()=>handleLogout() }>Logout</span></li>
 								</ul>
 							</div>

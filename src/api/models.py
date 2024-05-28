@@ -127,9 +127,9 @@ class Likes(db.Model):
     __tablename__ = 'likes'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    person_id = db.Column(db.Integer, db.ForeignKey('people.id'), nullable=False)
-    planet_id = db.Column(db.Integer, db.ForeignKey('planets.id'), nullable=False)
-    starship_id = db.Column(db.Integer, db.ForeignKey('starships.id'), nullable=False)
+    person_id = db.Column(db.Integer, db.ForeignKey('people.id'), nullable=True)
+    planet_id = db.Column(db.Integer, db.ForeignKey('planets.id'), nullable=True)
+    starship_id = db.Column(db.Integer, db.ForeignKey('starships.id'), nullable=True)
 
     def __repr__(self):
         return f'<Likes {self.id}>'
