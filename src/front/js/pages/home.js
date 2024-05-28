@@ -2,9 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { StarWarsBackground } from "../component/starWarsBackground";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
+	const navigate = useNavigate()
 	const [people, setPeople] = useState([])
 	const [planets, setPlanets] = useState([])
 	const [starships, setStarships] = useState([])
@@ -46,7 +48,7 @@ export const Home = () => {
 				<div className="album py-5 bg-background-light-color">
 					<div className="container">
 						<div className="horizontal-scroll-container d-flex">
-							{people.map( (person, index)=> {
+							{people ? people.map( (person, index)=> {
 								return(
 									<div className="card shadow-sm" key={index}>
 										<img
@@ -61,6 +63,7 @@ export const Home = () => {
 													<button 
 														type="button" 
 														className="btn btn-sm btn-outline-secondary"
+														onClick={ ()=>navigate(`/people/${person.id}`) }
 														>More details
 													</button>
 													<button 
@@ -73,14 +76,18 @@ export const Home = () => {
 										</div>
 									</div>
 								)
-							})								
+							})
+							:
+							<div className="text-center">
+								<h1 className="text-light">No people data :(</h1>
+							</div> 								
 							}							
 						</div>
 					</div>
 
 					<div className="container">
 						<div className="horizontal-scroll-container d-flex my-2">
-							{planets.map( (planet, index)=> {
+							{planets ? planets.map( (planet, index)=> {
 								return(
 									<div className="card shadow-sm" key={index}>
 										<img
@@ -95,6 +102,7 @@ export const Home = () => {
 													<button 
 														type="button" 
 														className="btn btn-sm btn-outline-secondary"
+														onClick={ ()=>navigate(`/planets/${planet.id}`) }
 														>More details
 													</button>
 													<button 
@@ -108,13 +116,17 @@ export const Home = () => {
 									</div>
 								)
 							})
+							:
+							<div className="text-center">
+								<h1 className="text-light">No planets data :(</h1>
+							</div>
 							}
 						</div>
 					</div>
 
 					<div className="container">
 						<div className="horizontal-scroll-container d-flex my-2">
-							{starships.map( (starship, index)=> {
+							{starships ? starships.map( (starship, index)=> {
 								return(
 									<div className="card shadow-sm" key={index}>
 										<img
@@ -129,6 +141,7 @@ export const Home = () => {
 													<button 
 														type="button" 
 														className="btn btn-sm btn-outline-secondary"
+														onClick={ ()=>navigate(`/starships/${starship.id}`) }
 														>More details
 													</button>
 													<button 
@@ -142,6 +155,10 @@ export const Home = () => {
 									</div>
 								)
 							})
+							:
+							<div className="text-center">
+								<h1 className="text-light">No starships data :(</h1>
+							</div>
 							}
 						</div>
 					</div>

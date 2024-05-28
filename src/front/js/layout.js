@@ -10,6 +10,9 @@ import injectContext from "./store/appContext";
 import { Signup } from "./pages/signup";
 import { Login } from "./pages/login";
 import { AdminDataLoad } from "./pages/adminLoadData";
+import { PersonInfo } from "./pages/personInfo";
+import { PlanetInfo } from "./pages/planetInfo";
+import { StarshipInfo } from "./pages/starshipInfo";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -34,7 +37,10 @@ const Layout = () => {
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<Signup />} path="/signUp" />
                         <Route element={<Login />} path="/login" />
-                        <Route element={<AdminDataLoad/>} path="/adminDataLoad" />
+                        <Route element={<AdminDataLoad />} path="/adminDataLoad" />
+                        <Route element={<PersonInfo />} path="/people/:characterId" />
+                        <Route element={<PlanetInfo />} path="/planets/:planetId" />
+                        <Route element={<StarshipInfo />} path="starships/:starshipId" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

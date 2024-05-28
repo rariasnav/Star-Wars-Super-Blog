@@ -14,7 +14,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
-			baseURL: "https://curly-barnacle-wr777q7vv5q7h5gwj-3001.app.github.dev/api",
+			baseURL: "https://jubilant-waffle-jj555p5rrgxv3q74p-3001.app.github.dev/api",
 			dataURL: "https://swapi.dev/api",
 			people: null,
 			planets: null,
